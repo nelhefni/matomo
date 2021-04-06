@@ -208,19 +208,8 @@ class ArchiveSelector
                     list($idarchive, $doneFlag, $value) = explode('|', $pair);
 
                     $result[$doneFlag][$dateStr][] = $idarchive;
-                    if (strpos($doneFlag, '.') === false) { // all plugins archive
+                    if (strpos($doneFlag, '.') === false && $value == ArchiveWriter::DONE_OK) { // all plugins archive
                         break; // found the all plugins archive, don't need to look in older archives
-                    } else {
-                        list($ignore, $plugin) =  explode('.', $doneFlag);
-                        if (empty($pluginsFound[$plugin])) {
-                            $pluginsFound[$plugin] = true;
-
-                            $result[$doneFlag][$dateStr][] = $idarchive;
-
-                            if (count($plugins) == count($pluginsFound)) {
-                                break; // found archive for every plugin, don't need to keep looking
-                            }
-                        }
                     }
                 }
             }
